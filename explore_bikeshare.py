@@ -9,7 +9,7 @@ import time
 import pandas as pd
 import operator
 
-CITY_DATA = { 'chicago': 'chicago.csv',
+city_data = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
@@ -26,7 +26,7 @@ def get_filters():
     # Gets user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     while True:
         city = str(input("Would you like to explore data for Chicago, New York City, or Washington?\n")).lower()
-        if city in CITY_DATA:
+        if city in city_data:
             break
         print('Please check to make sure you entered the city name properly.')
 
@@ -67,7 +67,7 @@ def load_data(city, month, day):
     """
 
     # Loads data file into a dataframe
-    df = pd.read_csv("C:/Users/Colin/Documents/Nanodegree/Python/Project/{}".format(CITY_DATA[city]))
+    df = pd.read_csv("C:/Users/Colin/Documents/Nanodegree/Python/Project/{}".format(city_data[city]))
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
