@@ -235,18 +235,21 @@ def main():
     """
 
     on = 'on'
+
     while on == 'on':
         city, month, day = get_filters()
         df = load_data(city, month, day)
         yes = ["yes", "y"]
         no = ["n", "no"]
         on = 'on'
+
         while True:
             show_header = input('\nWould you like to see the first 5 rows of data? Enter yes or no.\n').lower()
             x = 0
             if show_header in yes:
                 print(df.head())
                 x += 5
+
                 while True:
                     show_header = input('\nWould you like to see the next 5 rows of data? Enter yes or no.\n').lower()
                     if show_header in yes:
@@ -257,6 +260,7 @@ def main():
                         break
                     else:
                         print('\nPlease enter yes or no.\n')
+
                 break
             elif show_header in no:
                 break
