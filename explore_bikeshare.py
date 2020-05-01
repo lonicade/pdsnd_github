@@ -233,6 +233,9 @@ def main():
         Executes the get_filters(), load_data(), more_stats() functions in succession
         to explore Bikeshare data from Chicago, New York City, and Washington for
         the first half of 2017, depending on user input.
+
+        Users are required to pick a city, month, and day of the week to filter
+        the data.
     """
 
     on = 'on'
