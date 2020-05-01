@@ -1,15 +1,19 @@
 ### Date created
-Include the date you created this project and README file.
+30 April 2020
 
 ### Project Title
-Replace the Project Title
+Udacity Version Control Project
 
 ### Description
-Describe what your project is about and what it does
+This project involves using Git and GitHub to refactor code that explores US bike share data. The documentation for the project is also being updated to be more complete.
 
 ### Files used
-Include the files used
+explore_bikeshare.py
+.gitignore
+new_york_city.csv
+chicago.csv
+washington.csv
+README.md
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
-
+Udacity courseware
