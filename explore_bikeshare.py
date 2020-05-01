@@ -9,6 +9,7 @@ import time
 import pandas as pd
 import operator
 
+#Dictionary of city names and corresponding data files
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -29,7 +30,7 @@ def get_filters():
         if city in CITY_DATA:
             break
         print('Please check to make sure you entered the city name properly.')
-               
+
 
     # Gets user input for month (all, january, february, ... , june)
     while True:
@@ -65,7 +66,7 @@ def load_data(city, month, day):
     Returns:
         df - pandas DataFrame containing city data filtered by month and day
     """
-    
+
     # Loads data file into a dataframe
     df = pd.read_csv("C:/Users/Colin/Documents/Nanodegree/Python/Project/{}".format(CITY_DATA[city]))
 
@@ -82,7 +83,7 @@ def load_data(city, month, day):
         # uses the index of the months list to get the corresponding int
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
-    
+
         # filters by month to create the new dataframe
         df = df[df['month'] == month]
 
@@ -90,7 +91,7 @@ def load_data(city, month, day):
     if day != 'all':
         # filters by day of week to create the new dataframe
         df = df[df['day_of_week'] == day.title()]
-    
+
     return df
 
 
@@ -100,15 +101,15 @@ def time_stats(df):
     start_time = time.time()
 
     df['Start Time'] = pd.to_datetime(df['Start Time'])
-    
+
     # Displays the most common month
     months = df['Start Time'].dt.month_name()
     trips_by_month = {}
     for month in months:
         trips_by_month[month] = trips_by_month.get(month, 0) + 1
-     
+
     busiest_month = sorted(trips_by_month.items(), key=operator.itemgetter(1))[-1]
-    
+
     # alternate way to get busiest month: months.agg(lambda x:x.value_counts().index[0])
     #print('{} was the busiest month with {} trips.'.format(busiest_month[0], busiest_month[1]))
 
@@ -117,9 +118,9 @@ def time_stats(df):
     trips_by_day = {}
     for day in days:
         trips_by_day[day] = trips_by_day.get(day, 0) + 1
-     
+
     busiest_day = sorted(trips_by_day.items(), key=operator.itemgetter(1))[-1]
-    
+
     # alternate way to get busiest day: days.agg(lambda x:x.value_counts().index[0])
     # print('{} was the busiest day with {} trips.'.format(busiest_day[0], busiest_day[1]))
 
@@ -130,14 +131,14 @@ def time_stats(df):
     hour_counts = df['Start Time'].dt.hour.value_counts()
     busiest_hour = hour_counts.idxmax(), hour_counts.max()
     if busiest_hour[0] > 12:
-        print('{}pm was the busiest hour with {} total occurrences.'.format(busiest_hour[0] - 12, 
+        print('{}pm was the busiest hour with {} total occurrences.'.format(busiest_hour[0] - 12,
                                                                       busiest_hour[1]))
     elif busiest_hour[0] == 12:
-        print('{}pm was the busiest hour with {} total occurrences.'.format(busiest_hour[0], 
+        print('{}pm was the busiest hour with {} total occurrences.'.format(busiest_hour[0],
                                                                       busiest_hour[1]))
     else:
-        print('{}am was the busiest hour with {} total occurrences.'.format(busiest_hour[0], 
-                                                                      busiest_hour[1]))        
+        print('{}am was the busiest hour with {} total occurrences.'.format(busiest_hour[0],
+                                                                      busiest_hour[1]))
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -153,13 +154,13 @@ def station_stats(df):
     # Displays most commonly used start station
     start_station_counts = df['Start Station'].value_counts()
     most_common_start = start_station_counts.idxmax(), start_station_counts.max()
-    print('{} is the most common start station with {} total occurrences'.format(most_common_start[0], 
+    print('{} is the most common start station with {} total occurrences'.format(most_common_start[0],
                                                                            most_common_start[1]))
 
     # Displays most commonly used end station
     end_station_counts = df['End Station'].value_counts()
     most_common_end = end_station_counts.idxmax(), end_station_counts.max()
-    print('{} is the most common end station with {} total occurrences'.format(most_common_end[0], 
+    print('{} is the most common end station with {} total occurrences'.format(most_common_end[0],
                                                                            most_common_end[1]))
 
     # Displays most frequent combination of start station and end station trip
@@ -167,9 +168,9 @@ def station_stats(df):
     most_frequent_trip = [trips.groupby(['Start Station', 'End Station']).size().idxmax()[0],
                           trips.groupby(['Start Station', 'End Station']).size().idxmax()[1],
                           trips.groupby(['Start Station', 'End Station']).size().max()]
-        
-    
-    print('The most frequent trip starts at {} Station and ends at {} Station. This trip was made {} times!'.format(most_frequent_trip[0], 
+
+
+    print('The most frequent trip starts at {} Station and ends at {} Station. This trip was made {} times!'.format(most_frequent_trip[0],
                                                                                                     most_frequent_trip[1],
                                                                                                     most_frequent_trip[2]))
 
@@ -205,7 +206,7 @@ def user_stats(df):
 
     print('\nCalculating User Stats...\n')
     start_time = time.time()
-    
+
     # Displays counts of user types
     user_types = df['User Type'].value_counts()
     print(user_types)
@@ -228,12 +229,12 @@ def user_stats(df):
 
 
 def main():
-    """ 
+    """
         Executes the get_filters(), load_data(), more_stats() functions in succession
-        to explore Bikeshare data from Chicago, New York City, and Washington for 
+        to explore Bikeshare data from Chicago, New York City, and Washington for
         the first half of 2017, depending on user input.
     """
-    
+
     on = 'on'
     while on == 'on':
         city, month, day = get_filters()
@@ -249,7 +250,7 @@ def main():
             elif show_header in no:
                 break
             print('\nPlease enter yes or no.\n')
-        
+
         while True:
             more_stats = input('\nWould you like to see more stats about this subset of data?\n').lower()
             if more_stats in yes:
@@ -261,7 +262,7 @@ def main():
             elif more_stats in no:
                 break
             print('\nPlease enter yes or no.\n')
-        
+
         while on == 'on':
             on = "on"
             restart = input('\nWould you like to restart the program? Enter yes or no.\n').lower()
